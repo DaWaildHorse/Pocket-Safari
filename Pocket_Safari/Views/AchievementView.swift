@@ -12,24 +12,21 @@ struct AchievementView: View {
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(Color.black)
-                .edgesIgnoringSafeArea(.all) // This makes the black background cover the full screen
+            Color.black.edgesIgnoringSafeArea(.all)
                 
             VStack {
-                // Green rectangle at the top
-                Rectangle()
-                    .fill(Color.green)
-                    .frame(height: 50) // Adjust the height as needed
-                    .cornerRadius(10)
-                    .overlay(
-                        Text("Lorem Ipsum")
-                            .foregroundColor(.white)
-                    )
-                    .padding(.top, 20) // Adjust top margin
-                    .padding(.horizontal, 20) // Adds horizontal margins
-
-                Spacer() // Pushes the content down
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.green)
+                    
+                    Text("Lorem Ipsum")
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                Spacer()
             }
         }
     }

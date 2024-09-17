@@ -13,6 +13,7 @@ struct AchievementView: View {
     var body: some View {
         ZStack {
             colorP.pocketBlack.edgesIgnoringSafeArea(.all)
+
             
             ScrollView {
                 VStack(spacing: 20) {
@@ -46,6 +47,7 @@ struct AchievementCard: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(colorP.pocketDarkGreen)
+
             
             VStack {
                 Text(achievement.description)
@@ -59,7 +61,9 @@ struct AchievementCard: View {
                             .frame(height: 20)
                         
                         Rectangle()
+
                             .fill(colorP.pocketShadeGreen)
+
                             .frame(width: geometry.size.width * CGFloat(achievement.progress), height: 20)
                     }
                     .cornerRadius(10)

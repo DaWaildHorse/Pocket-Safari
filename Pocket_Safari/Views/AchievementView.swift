@@ -12,12 +12,12 @@ struct AchievementView: View {
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
+            colorP.pocketBlack.edgesIgnoringSafeArea(.all)
             
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(achievements) { achievement in
-                        AchievementCard(achievement: achievement)
+                        AchievementCard(achievement: achievement, colorP: colorP)
                     }
                 }
                 .padding()
@@ -29,7 +29,7 @@ struct AchievementView: View {
     private func loadAchievements() {
         guard let url = Bundle.main.url(forResource: "achievements", withExtension: "txt"),
               let content = try? String(contentsOf: url) else {
-            print("Failed to load achievement.txt")
+            print("Failed to load achievements.txt")
             return
         }
         
@@ -40,11 +40,12 @@ struct AchievementView: View {
 
 struct AchievementCard: View {
     let achievement: Achievement
+    let colorP: ColorPalette
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(red: 0, green: 0.5, blue: 0)) // Dark green color
+                .fill(colorP.pocketDarkGreen)
             
             VStack {
                 Text(achievement.description)
@@ -58,7 +59,7 @@ struct AchievementCard: View {
                             .frame(height: 20)
                         
                         Rectangle()
-                            .fill(Color.teal) // Please use the established color palette
+                            .fill(colorP.pocketShadeGreen)
                             .frame(width: geometry.size.width * CGFloat(achievement.progress), height: 20)
                     }
                     .cornerRadius(10)

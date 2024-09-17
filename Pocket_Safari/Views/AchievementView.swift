@@ -27,7 +27,7 @@ struct AchievementView: View {
     }
     
     private func loadAchievements() {
-        guard let url = Bundle.main.url(forResource: "achievments", withExtension: "txt"),
+        guard let url = Bundle.main.url(forResource: "achievements", withExtension: "txt"),
               let content = try? String(contentsOf: url) else {
             print("Failed to load achievement.txt")
             return
@@ -58,7 +58,7 @@ struct AchievementCard: View {
                             .frame(height: 20)
                         
                         Rectangle()
-                            .fill(Color.teal) // Change this color as needed
+                            .fill(Color.teal) // Please use the established color palette
                             .frame(width: geometry.size.width * CGFloat(achievement.progress), height: 20)
                     }
                     .cornerRadius(10)

@@ -19,6 +19,9 @@
 		0640EE292C7E76BE00995F8A /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0640EE282C7E76BE00995F8A /* CameraView.swift */; };
 		0640EE2B2C7E7A7B00995F8A /* AchievementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0640EE2A2C7E7A7B00995F8A /* AchievementView.swift */; };
 		0640EE2D2C7E7B6000995F8A /* Encyclopedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0640EE2C2C7E7B6000995F8A /* Encyclopedia.swift */; };
+		06777B662C99DE8200202853 /* achievments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06777B652C99DE8200202853 /* achievments.txt */; };
+		06777B672C99DE8200202853 /* achievments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06777B652C99DE8200202853 /* achievments.txt */; };
+		06777B682C99DE8200202853 /* achievments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 06777B652C99DE8200202853 /* achievments.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,7 @@
 		0640EE282C7E76BE00995F8A /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		0640EE2A2C7E7A7B00995F8A /* AchievementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementView.swift; sourceTree = "<group>"; };
 		0640EE2C2C7E7B6000995F8A /* Encyclopedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encyclopedia.swift; sourceTree = "<group>"; };
+		06777B652C99DE8200202853 /* achievments.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = achievments.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 		0640EE232C7E73D500995F8A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				06777B652C99DE8200202853 /* achievments.txt */,
 			);
 			path = Helpers;
 			sourceTree = SOURCE_ROOT;
@@ -272,6 +277,7 @@
 			files = (
 				0640EDFF2C7E704B00995F8A /* Preview Assets.xcassets in Resources */,
 				0640EDFC2C7E704B00995F8A /* Assets.xcassets in Resources */,
+				06777B662C99DE8200202853 /* achievments.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06777B672C99DE8200202853 /* achievments.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06777B682C99DE8200202853 /* achievments.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

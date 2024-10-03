@@ -1,1 +1,64 @@
+# Xcode
+*.xcuserstate
+*.xcworkspace
+*.xcuserdata
 *.xcodeproj
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata
+
+# Swift Package Manager
+/.build/
+/Packages
+/Package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Derived data
+DerivedData/
+*.hmap
+
+# Build products
+build/
+*.app
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# User-specific files
+*.swp
+*.swo
+*.DS_Store
+
+# Logs
+*.log
+
+# Archive files
+*.xcarchive
+
+# Documentation
+*.doccarchive
+
+# Temporary files
+*.tmp
+*.temp
+
+# SwiftUI Preview Canvas
+*.preview
+
+# SwiftLint
+.swiftlint.yml
+
+# Simulator
+*.simulator
+
+# Other
+.idea/
+*.lock
+*.orig
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3

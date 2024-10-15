@@ -17,6 +17,7 @@ class Camera: NSObject {
     private var photoOutput: AVCapturePhotoOutput?
     private var videoOutput: AVCaptureVideoDataOutput?
     private var sessionQueue: DispatchQueue!
+    var photoCompletion: ((Bool) -> Void)?
 
     private var allCaptureDevices: [AVCaptureDevice] {
         AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInDualWideCamera, .builtInWideAngleCamera, .builtInDualWideCamera], mediaType: .video, position: .unspecified).devices
@@ -299,9 +300,12 @@ class Camera: NSObject {
         }
     }
 
-    func takePhoto() {
-        guard let photoOutput = self.photoOutput else { return }
-
+    func takePhoto(completion : @escaping (Bool) -> Void) {
+        self.photoCompletion = completion  // Store the completion handler
+            guard let photoOutput = self.photoOutput else {
+                completion(false)  // Call completion with failure
+                return
+        }
         sessionQueue.async {
 
             var photoSettings = AVCapturePhotoSettings()
@@ -333,24 +337,29 @@ class Camera: NSObject {
 extension Camera: AVCapturePhotoCaptureDelegate {
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-
         if let error = error {
             logger.error("Error capturing photo: \(error.localizedDescription)")
+            photoCompletion?(false)  // Call completion with failure
             return
         }
 
         if let imageData = photo.fileDataRepresentation(),
-                   let image = UIImage(data: imageData) {
+           let image = UIImage(data: imageData) {
+            // Save the photo to the gallery
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
 
-                    // Save the photo to the gallery
-                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+            // Continue with your existing photo stream logic
+            addToPhotoStream?(photo)
 
-                    // Continue with your existing photo stream logic
-                    addToPhotoStream?(photo)
-                } else {
-                    logger.error("Error converting photo to UIImage.")
-                }
-            }
+            photoCompletion?(true)  // Call completion with success
+        } else {
+            logger.error("Error converting photo to UIImage.")
+            photoCompletion?(false)  // Call completion with failure
+        }
+
+        photoCompletion = nil  // Clear the completion handler
+    }
+
         }
 
 extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {

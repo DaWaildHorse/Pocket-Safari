@@ -8,6 +8,8 @@ final class DataModel: ObservableObject {
     let camera = Camera()
     @Published var viewfinderImage: Image?
     @Published var thumbnailImage: Image?
+    @Published var lastCapturedImage: Image?
+
     
     var isPhotosLoaded = false
     
@@ -33,16 +35,18 @@ final class DataModel: ObservableObject {
     }
     
     func handleCameraPhotos() async {
-        let unpackedPhotoStream = camera.photoStream
-            .compactMap { self.unpackPhoto($0) }
-        
-        for await photoData in unpackedPhotoStream {
-            Task { @MainActor in
-                thumbnailImage = photoData.thumbnailImage
-            }
-            
-        }
-    }
+           let unpackedPhotoStream = camera.photoStream.compactMap { self.unpackPhoto($0) }
+           
+           for await photoData in unpackedPhotoStream {
+               Task { @MainActor in
+                   // Create Image directly from the Data
+                   if let uiImage = UIImage(data: photoData.imageData) {
+                       lastCapturedImage = Image(uiImage: uiImage.fixOrientation())
+                   }
+                   viewfinderImage = photoData.thumbnailImage
+               }
+           }
+       }
     
     private func unpackPhoto(_ photo: AVCapturePhoto) -> PhotoData? {
         guard let imageData = photo.fileDataRepresentation() else { return nil }
@@ -93,6 +97,19 @@ fileprivate extension Image.Orientation {
         case .right: self = .right
         case .rightMirrored: self = .rightMirrored
         }
+    }
+}
+
+extension UIImage {
+    func fixOrientation() -> UIImage {
+        if imageOrientation == .up { return self }
+
+        UIGraphicsBeginImageContext(size)
+        draw(in: CGRect(origin: .zero, size: size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return normalizedImage ?? self
     }
 }
 

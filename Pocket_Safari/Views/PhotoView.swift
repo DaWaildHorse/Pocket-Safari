@@ -1,11 +1,10 @@
 import SwiftUI
 import UIKit
 
-
 struct PhotoView: View {
     let capturedImage: Image?
     let colorP = ColorPalette() // Assuming you have a ColorPalette defined
-
+    
     var body: some View {
         ZStack {
             if let image = capturedImage {
@@ -21,17 +20,34 @@ struct PhotoView: View {
 
             ScrollView {
                 ZStack {
+                    GeometryReader { geometry in
+                        let scrollOffset = geometry.frame(in: .global).minY
+                        let gradientOpacity = min(max(-scrollOffset / 300, 0), 1)
+                        
+                        LinearGradient(
+                                                    gradient: Gradient(colors: [
+                                                        Color.clear,
+                                                        colorP.pocketDarkGreen.opacity(gradientOpacity * 3), //
+                                                        colorP.pocketDarkGreen.opacity(1.0) // Full opacity for the bottom
+                                                    ]),
+                                                    startPoint: .top,
+                                                    endPoint: .bottom
+                                                )                        .frame(height: geometry.size.height * 2)
+                        .edgesIgnoringSafeArea(.all)
+                    }
                     
-
-                    CustomRectangle2()
-                        .padding(.horizontal, 40)
-                        .padding()
-                    CustomRectangle3()
-                        .padding(.horizontal, 40)
-                        .padding()
-                    CustomRectangle4()
-                        .padding(.horizontal, 40)
-                        .padding()
+                    VStack(spacing: 20) {
+                        CustomRectangle(height: 800)
+                            .padding(.horizontal, 40)
+                        CustomRectangle(height: 600)
+                            .padding(.horizontal, 40)
+                        CustomRectangle(height: 400)
+                            .padding(.horizontal, 40)
+                        CustomRectangle(height: 300)
+                            .padding(.horizontal, 40)
+                        CustomRectangle(height: 200)
+                            .padding(.horizontal, 40)
+                    }
                 }
             }
         }
@@ -78,48 +94,15 @@ struct ImagePicker: UIViewControllerRepresentable {
 
 struct CustomRectangle: View {
     let colorP = ColorPalette()
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .frame(height: 800)
-            .padding()
-    }
-}
-
-struct CustomRectangle2: View {
-    let colorP = ColorPalette()
+    let height: CGFloat // Accept height as a parameter
 
     var body: some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(colorP.pocketGray)
-            .frame(height: 50)
-            .padding(.top, -300)
-    }
-}
-
-struct CustomRectangle3: View {
-    let colorP = ColorPalette()
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(colorP.pocketGray)
-            .frame(height: 400)
-            .padding(.top, -50)
-    }
-}
-
-struct CustomRectangle4: View {
-    let colorP = ColorPalette()
-
-    var body: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(colorP.pocketGray)
-            .frame(height: 150)
-            .padding(.top, 550)
+            .frame(height: height)
     }
 }
 
 #Preview {
     ContentView()
 }
-

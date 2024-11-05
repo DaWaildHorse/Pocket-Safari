@@ -10,24 +10,28 @@ import SwiftUI
 struct ContentView: View {
     let colorP = ColorPalette()
     @State private var isActive = false
+    @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore: Bool = false
     
     var body: some View {
-        
-        if isActive {
+    
+        if hasLaunchedBefore{
+            if isActive {
                 NavigationBarView()
                     .ignoresSafeArea(.all) // Your main app content
-                } else {
-                    PantallaCargaView() // Your splash screen
-                        .onAppear {
-                            // Delay for the splash screen
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                withAnimation {
-                                    isActive = true
-                                }
+            } else {
+                PantallaCargaView() // Your splash screen
+                    .onAppear {
+                        // Delay for the splash screen
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            withAnimation {
+                                isActive = true
                             }
                         }
-                }
-        
+                    }
+            }
+        } else {
+            StartUpView(hasLaunchedBefore: $hasLaunchedBefore)
+        }
         
         
         

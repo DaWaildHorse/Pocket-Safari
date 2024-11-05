@@ -3,7 +3,9 @@ import SwiftUI
 struct CameraView: View {
     @StateObject private var model = DataModel()
     @State private var navigateToPhotoView = false
-    
+    @State private var navigateToUserView = false // Estado para navegar a UserView
+
+
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
@@ -12,6 +14,23 @@ struct CameraView: View {
                         Color.black
                             .opacity(0.75)
                             .frame(height: geometry.size.height * 0.15)
+                            .overlay(alignment: .topTrailing) {
+                                Button(action: {
+                                    navigateToUserView = true // Cambiar el estado para navegar a UserView
+                                }) {
+                                    Image(systemName: "person.crop.circle")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 30, height: 30) // Ajusta el tamaño según tus necesidades
+                                        .padding()
+                                }
+                                .background(
+                                    NavigationLink(destination: UserView(), isActive: $navigateToUserView) {
+                                        EmptyView()
+                                    }
+                                    .hidden() // Ocultar el enlace para evitar interferencias visuales
+                                )
+                            }
                     }
                     .overlay(alignment: .bottom) {
                         buttonsView()
